@@ -42,4 +42,55 @@ for (let color of product.colors){
 
 }
 
+
 });
+
+// Create a click even for the add to cart button
+
+let button = document.getElementById('addToCart');
+console.log(button);
+button.addEventListener('click', function(){
+  console.log(document.getElementById('colors').value, document.getElementById('quantity').value);
+  let selectedProduct = {
+    selectedAltTxt : document.querySelector('.item__img img').alt,
+    selectedColors : document.getElementById('colors').value,
+    selectedId : id,
+    selectedImage : document.querySelector('.item__img img').src,
+    selectedName : document.getElementById('title').textContent,
+    selectedPrice : document.getElementById('price').textContent,
+    selectedQuantity : Number(document.getElementById('quantity').value),
+  }
+  let cart = localStorage.getItem('cart');
+  console.log(localStorage,cart);
+
+      if (cart === null ) {
+        cart = [];
+    } else {
+        cart = JSON.parse (cart);
+    }
+
+   let notFound = true
+
+    for (let i = 0; i < cart.length; i++) {
+        console.log(cart[i].selectedId)
+        console.log(selectedProduct.selectedId)
+        console.log(cart[i].selectedColors)
+        console.log(selectedProduct.selectedColors)
+        console.log(cart[i]);
+  
+    if (cart[i].selectedId === selectedProduct.selectedId && cart[i].selectedColors === selectedProduct.selectedColors) {
+        cart[i].selectedQuantity += selectedProduct.selectedQuantity;
+        console.log(cart[i].selectedQuantity)
+        console.log(selectedProduct.selectedQuantity)
+        notFound = false;  
+        console.log("find") 
+        }
+    }
+
+  if (notFound) {cart.push(selectedProduct)}
+   
+    localStorage.setItem("cart", JSON.stringify(cart))
+
+     alert('The product has been added to the cart')
+
+})
