@@ -107,4 +107,30 @@ let totalQuantity = document.getElementById('totalQuantity');
 totalQuantity.innerHTML = articles;
 
 
+let priceForEachProductInCart = [];
+let price = 0;
+for (let i = 0; i < selectedProductsInCart.length; i++) {
+    if (selectedProductsInCart[i].selectedQuantity == 0) { //This conditional statement helps prevent adding up the cost of products add to the cart with no quantity.
+        selectedProductsInCart[i].selectedPrice = 0;
+        priceForEachProductInCart.push(Number(selectedProductsInCart[i].selectedPrice));
+    
+    } else {
+        priceForEachProductInCart.push(Number(selectedProductsInCart[i].selectedPrice));
+    }
+   
+    
+}
+
+console.log(priceForEachProductInCart);
+
+for (let i = 0; i < priceForEachProductInCart.length; i++) {
+    price += priceForEachProductInCart[i];
+
+}
+
+console.log(price);
+
+let totalPrice = document.getElementById('totalPrice');
+totalPrice.innerHTML = price;
+
 
