@@ -74,10 +74,15 @@ if (selectedProductsList === null || selectedProductsList == 0){
             let selectedProductDelete = document.createElement('p');
             selectedProductContentSettingsDelete.appendChild(selectedProductDelete);
             selectedProductDelete.className = "deleteItem";
+            selectedProductDelete.innerHTML = "Delete"
 
         }
     }
 }
 
 
-getSelectedProductsInCart(selectedProductsInCart);      // Invoke the function to dynamically display product in the cart on the cart page. 
+getSelectedProductsInCart(selectedProductsInCart); // Invoke the function to dynamically display product in the cart on the cart page. 
+
+
+
+
