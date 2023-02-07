@@ -25,7 +25,59 @@ if (selectedProductsList === null || selectedProductsList == 0){
             selectedProductImg.src = selectedProduct.selectedImage;
             selectedProductContainerImg.appendChild(selectedProductImg);
             
+            let selectedProductContent = document.createElement('div');
+            selectedProductContainer.appendChild(selectedProductContent);
+            selectedProductContent.className = "cart__item__content";
+
+            let selectedProductContentDescription = document.createElement('div');
+            selectedProductContent.appendChild(selectedProductContentDescription);
+            selectedProductContentDescription.className = "cart__item__content__description";
+
+            let selectedProductName = document.createElement('h2');
+            selectedProductContentDescription.appendChild(selectedProductName);
+            selectedProductName.innerHTML = selectedProduct.selectedName;
+
+            let selectedProductColor = document.createElement('p');
+            selectedProductContentDescription.appendChild(selectedProductColor);
+            selectedProductColor.innerHTML = selectedProduct.selectedColors;
+
+            let selectedProductPrice = document.createElement('p');
+            selectedProductContentDescription.appendChild(selectedProductPrice);
+            selectedProductPrice.innerHTML = '€' + selectedProduct.selectedPrice;
+
+           let selectedProductContentSettings = document.createElement('div');
+           selectedProductContent.appendChild(selectedProductContentSettings);
+           selectedProductContentSettings.className = "cart__item__content__settings";
+           
+           let selectedProductContentSettingsQuantity = document.createElement('div');
+           selectedProductContentSettings.appendChild(selectedProductContentSettingsQuantity);
+           selectedProductContentSettingsQuantity.className = "cart__item__content__settings__quantity";
+
+           let selectedProductQuantity = document.createElement('p');
+           selectedProductContentSettingsQuantity.appendChild(selectedProductQuantity);
+           selectedProductQuantity.innerHTML = "Quantity:";
+
+           let selectedProductQuantityInput = document.createElement('input');
+           selectedProductContentSettingsQuantity.appendChild(selectedProductQuantityInput);
+           selectedProductQuantityInput.setAttribute('type', 'number');
+           selectedProductQuantityInput.setAttribute('name', 'itemQuantity');
+           selectedProductQuantityInput.setAttribute('min', '1');
+           selectedProductQuantityInput.setAttribute('max', '100');
+           selectedProductQuantityInput.value = selectedProduct.selectedQuantity;
+           selectedProductQuantityInput.className = "itemQuantity";
+
+
+            let selectedProductContentSettingsDelete = document.createElement('div');
+            selectedProductContentSettings.appendChild(selectedProductContentSettingsDelete);
+            selectedProductContentSettingsDelete.className = "cart__item__content__settings__delete";
+
+            let selectedProductDelete = document.createElement('p');
+            selectedProductContentSettingsDelete.appendChild(selectedProductDelete);
+            selectedProductDelete.className = "deleteItem";
 
         }
     }
 }
+
+
+getSelectedProductsInCart(selectedProductsInCart);      // Invoke the function to dynamically display product in the cart on the cart page. 
