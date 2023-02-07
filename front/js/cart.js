@@ -107,24 +107,29 @@ let totalQuantity = document.getElementById('totalQuantity');
 totalQuantity.innerHTML = articles;
 
 
-let priceForEachProductInCart = [];
+// let priceForEachProductInCart = [];
 let price = 0;
-for (let i = 0; i < selectedProductsInCart.length; i++) {
-    if (selectedProductsInCart[i].selectedQuantity == 0) { //This conditional statement helps prevent adding up the cost of products add to the cart with no quantity.
-        selectedProductsInCart[i].selectedPrice = 0;
-        priceForEachProductInCart.push(Number(selectedProductsInCart[i].selectedPrice));
+// for (let i = 0; i < selectedProductsInCart.length; i++) {
+//     if (selectedProductsInCart[i].selectedQuantity == 0) { //This conditional statement helps prevent adding up the cost of products add to the cart with no quantity.
+//         selectedProductsInCart[i].selectedPrice = 0;
+//         priceForEachProductInCart.push(Number(selectedProductsInCart[i].selectedPrice));
     
-    } else {
-        priceForEachProductInCart.push(Number(selectedProductsInCart[i].selectedPrice));
-    }
+//     } else {
+//         priceForEachProductInCart.push(Number(selectedProductsInCart[i].selectedPrice));
+//     }
    
     
-}
+// }
 
-console.log(priceForEachProductInCart);
+// console.log(priceForEachProductInCart);
 
-for (let i = 0; i < priceForEachProductInCart.length; i++) {
-    price += priceForEachProductInCart[i];
+// for (let i = 0; i < priceForEachProductInCart.length; i++) {
+//     price += priceForEachProductInCart[i];
+
+// }
+
+for (let i = 0; i < quantityOfEachProductInCart.length; i++){
+    price += (Number(quantityOfEachProductInCart[i]) * selectedProductsInCart[i].selectedPrice);
 
 }
 
@@ -134,3 +139,42 @@ let totalPrice = document.getElementById('totalPrice');
 totalPrice.innerHTML = price;
 
 
+
+// Add the ability to change the quantity within the cart page and the logic behind deleting a product from the cart.
+
+
+let quantityInput = document.getElementsByClassName('itemQuantity');
+console.log(quantityInput);
+
+for (let i = 0; i < quantityInput.length; i++) {
+    quantityInput[i].addEventListener('change', function(event){
+        event.preventDefault();
+        let modifiedQuantity = selectedProductsInCart[i].selectedQuantity;
+        console.log(modifiedQuantity);
+        let selectedProductModifiedValue = Number(quantityInput[i].value);
+        selectedProductsInCart[i].selectedQuantity = selectedProductModifiedValue;
+        localStorage.setItem('cart', JSON.stringify(selectedProductsInCart));
+        window.location.reload() //forces the cart page to reload and reflects changes made to the cart.
+    })
+   
+    
+}
+
+
+let deleteButton = document.getElementsByClassName('deleteItem');
+console.log(deleteButton);
+
+for (let i = 0; i < deleteButton.length; i++) {
+    deleteButton[i].addEventListener('click', function(event){
+        event.preventDefault();
+        let deleteSelectedProductId = selectedProductsInCart[i].selectedId;
+        let deleteSelectedProductColor = selectedProductsInCart[i].selectedColors;
+        let selectedProductsList = selectedProductsInCart.filter((selectedProductsInCart) => {
+            return selectedProductsInCart.selectedId !== deleteSelectedProductId || selectedProductsInCart.selectedColors !== deleteSelectedProductColor;
+        })
+        localStorage.setItem('cart', JSON.stringify(selectedProductsList));
+        alert(`${selectedProductsInCart[i].selectedName}`+ ' has been successfully removed from your cart.')
+        window.location.reload() //forces the cart page to reload and reflects changes made to the cart.
+    })
+    
+}
