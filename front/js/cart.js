@@ -74,7 +74,7 @@ if (selectedProductsList === null || selectedProductsList == 0){
             let selectedProductDelete = document.createElement('p');
             selectedProductContentSettingsDelete.appendChild(selectedProductDelete);
             selectedProductDelete.className = "deleteItem";
-            selectedProductDelete.innerHTML = "Delete"
+            selectedProductDelete.innerHTML = "Delete";
 
         }
     }
@@ -83,6 +83,28 @@ if (selectedProductsList === null || selectedProductsList == 0){
 
 getSelectedProductsInCart(selectedProductsInCart); // Invoke the function to dynamically display product in the cart on the cart page. 
 
+
+// Find out the total price and number of products in the cart.
+
+let selectedProductsInCartArray = document.getElementsByClassName('itemQuantity');
+console.log(selectedProductsInCartArray); //Logs an HTMLCollection of an array of objects, although we just need the value.
+let quantityOfEachProductInCart = [];
+let articles = 0;
+
+for (let i = 0; i < selectedProductsInCartArray.length; i++) {
+    quantityOfEachProductInCart.push(Number(selectedProductsInCartArray[i].value));
+}
+
+console.log(quantityOfEachProductInCart);
+
+for (let i = 0; i < quantityOfEachProductInCart.length; i++){
+    articles += quantityOfEachProductInCart[i];
+}
+
+console.log(articles);
+
+let totalQuantity = document.getElementById('totalQuantity');
+totalQuantity.innerHTML = articles;
 
 
 
