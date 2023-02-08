@@ -178,3 +178,74 @@ for (let i = 0; i < deleteButton.length; i++) {
     })
     
 }
+
+let emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm"); //Email Validator Regular Expression
+let nameRegex = new RegExp(/\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/, 'gm'); //First name and Last Name Validator Regular Expression 
+let OnlyLettersRegex = new RegExp(/^[A-Za-z]+$/); // This could come handy for vaildating cities, as I believe they are no cities in the world that contains numbers in their name.
+
+let firstName = document.getElementById("firstName");
+let lastName = document.getElementById("lastName");
+let address = document.getElementById("address");
+let city = document.getElementById("city");
+let email = document.getElementById("email");
+
+firstName.addEventListener("input", function(event){
+    event.preventDefault();
+    if (nameRegex.test(firstName.value) == false || firstName.value == "") {
+    document.getElementById("firstNameErrorMsg").innerHTML =
+      "Invalid first name";
+      return false;
+  } else {
+    document.getElementById("firstNameErrorMsg").innerHTML = "";
+    return true;
+  }
+});
+
+lastName.addEventListener("input", function(event) {
+    event.preventDefault();
+    if (nameRegex.test(firstName.value) == false || firstName.value == "") {
+    document.getElementById("firstNameErrorMsg").innerHTML =
+      "Invalid last name";
+      return false;
+  } else {
+    document.getElementById("firstNameErrorMsg").innerHTML = "";
+    return true;
+  }
+});
+
+address.addEventListener("input", function(event) {
+    event.preventDefault();
+    if (nameRegex.test(firstName.value) == false || firstName.value == "") {
+    document.getElementById("addressErrorMsg").innerHTML =
+      "Invalid Address";
+      return false;
+  } else {
+    document.getElementById("firstNameErrorMsg").innerHTML = "";
+    return true;
+  }
+});
+
+city.addEventListener("input", function(event) {
+    event.preventDefault();
+    if (OnlyLettersRegex.test(city.value) == false || city.value == "") {
+    document.getElementById("cityErrorMsg").innerHTML = "Invalid City";
+    return false;
+    } else {
+    document.getElementById("cityErrorMsg").innerHTML = "";
+    return true;
+}
+});
+
+email.addEventListener("input", function(event) {
+    event.preventDefault();
+    if (emailRegex.test(email.value) == false || email.value == "") {
+    document.getElementById("emailErrorMsg").innerHTML = "Invalid Email";
+    return false; 
+    }
+    else {
+    document.getElementById("emailErrorMsg").innerHTML = "";
+    return true;
+  }
+});
+
+
