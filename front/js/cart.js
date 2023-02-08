@@ -248,4 +248,64 @@ email.addEventListener("input", function(event) {
   }
 });
 
+let orderButton = document.getElementById('order'); // add onclick event listener to the order button;
+orderButton.addEventListener('click', function(event){
+    email.preventDefault;
+    let filledForm = {
+        firstName : firstName.value,
+        lastName : lastName.value,
+        address : address.value,
+        city : city.value,
+        email : email.value
+    };
+    //Need to create conditional statements to capture empty form and failed vaildation through regex 
+
+    if (
+        firstName.value === "" ||
+        lastName.value === "" ||
+        address.value === "" ||
+        city.value === "" ||
+        email.value === ""
+      ) {
+        window.confirm(
+          "You must enter your details to place the order!"
+        );
+      } else if (
+        nameRegex.test(firstName.value) == false ||
+        nameRegex.test(lastName.value) == false ||
+        adressRegex.test(address.value) == false ||
+        OnlyLettersRegex.test(city.value) == false ||
+        emailRegex.test(email.value) == false
+      ) {
+        window.confirm("Please enter your details correctly!");
+    } else {
+        let products = [];
+        selectedProductsInCart.forEach((selectedProductInCart) => {
+        products.push(selectedProductInCart.selectedId);
+        });
+    }
+
+    let pageOrder ={filledForm,products};
+    fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pageOrder),
+        mode:"cors"
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((confirm) => {
+          window.location.href = "./confirmation.html?orderId=" + confirm.orderId;
+          localStorage.clear();
+        })
+        .catch((error) => {
+          console.log("An error has occurred");
+        });
+    }
+);
+
+
 
