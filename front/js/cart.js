@@ -179,9 +179,11 @@ for (let i = 0; i < deleteButton.length; i++) {
     
 }
 
-let emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm"); //Email Validator Regular Expression
-let nameRegex = new RegExp(/\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/, 'gm'); //First name and Last Name Validator Regular Expression 
+let emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/); //Email Validator Regular Expression
+let nameRegex = new RegExp(/\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/); //First name and Last Name Validator Regular Expression 
 let OnlyLettersRegex = new RegExp(/^[A-Za-z]+$/); // This could come handy for vaildating cities, as I believe they are no cities in the world that contains numbers in their name.
+let addressRegex = new RegExp(/^[a-zA-Z0-9 ]*$/);
+
 
 let firstName = document.getElementById("firstName");
 let lastName = document.getElementById("lastName");
@@ -203,27 +205,26 @@ firstName.addEventListener("input", function(event){
 
 lastName.addEventListener("input", function(event) {
     event.preventDefault();
-    if (nameRegex.test(firstName.value) == false || firstName.value == "") {
-    document.getElementById("firstNameErrorMsg").innerHTML =
+    if (nameRegex.test(lastName.value) == false || lastName.value == "") {
+    document.getElementById("lastNameErrorMsg").innerHTML =
       "Invalid last name";
       return false;
   } else {
-    document.getElementById("firstNameErrorMsg").innerHTML = "";
+    document.getElementById("lastNameErrorMsg").innerHTML = "";
     return true;
   }
 });
 
-address.addEventListener("input", function(event) {
+address.addEventListener("input", (event) => {
     event.preventDefault();
-    if (nameRegex.test(firstName.value) == false || firstName.value == "") {
-    document.getElementById("addressErrorMsg").innerHTML =
-      "Invalid Address";
+    if (addressRegex.test(address.value) == false || address.value == "") {
+      document.getElementById("addressErrorMsg").innerHTML = "Invalid Address";
       return false;
-  } else {
-    document.getElementById("firstNameErrorMsg").innerHTML = "";
-    return true;
-  }
-});
+    } else {
+      document.getElementById("addressErrorMsg").innerHTML = "";
+      return true;
+    }
+  });
 
 city.addEventListener("input", function(event) {
     event.preventDefault();
@@ -250,13 +251,13 @@ email.addEventListener("input", function(event) {
 
 let orderButton = document.getElementById('order'); // add onclick event listener to the order button;
 orderButton.addEventListener('click', function(event){
-    email.preventDefault;
+    event.preventDefault;
     let filledForm = {
         firstName : firstName.value,
         lastName : lastName.value,
         address : address.value,
         city : city.value,
-        email : email.value
+        email : email.value,
     };
     //Need to create conditional statements to capture empty form and failed vaildation through regex 
 
@@ -273,7 +274,7 @@ orderButton.addEventListener('click', function(event){
       } else if (
         nameRegex.test(firstName.value) == false ||
         nameRegex.test(lastName.value) == false ||
-        adressRegex.test(address.value) == false ||
+        addressRegex.test(address.value) == false ||
         OnlyLettersRegex.test(city.value) == false ||
         emailRegex.test(email.value) == false
       ) {
@@ -283,29 +284,29 @@ orderButton.addEventListener('click', function(event){
         selectedProductsInCart.forEach((selectedProductInCart) => {
         products.push(selectedProductInCart.selectedId);
         });
-    }
+    
 
-    let pageOrder ={filledForm,products};
-    fetch("http://localhost:3000/api/products/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(pageOrder),
-        mode:"cors"
-      })
-        .then((res) => {
-          return res.json();
+        let pageOrder ={filledForm, products};
+        fetch("http://localhost:3000/api/products/order", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pageOrder),
+            mode:"cors"
         })
-        .then((confirm) => {
-          window.location.href = "./confirmation.html?orderId=" + confirm.orderId;
-          localStorage.clear();
-        })
-        .catch((error) => {
-          console.log("An error has occurred");
-        });
-    }
-);
+            .then((res) => {
+            return res.json();
+            })
+            .then((confirm) => {
+            window.location.href = "./confirmation.html?orderId=" + confirm.orderId;
+            localStorage.clear();
+            })
+            .catch((error) => {
+            console.log("An error has occurred");
+            });
+        }
+});
 
 
 
